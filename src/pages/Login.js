@@ -93,15 +93,15 @@ const Login = () => {
                                 className={styles.input}
                             />
                             <div className={styles.optionsRow}>
-                                <label className={styles.checkboxContainer}>
+                                {/* <label className={styles.checkboxContainer}>
                                     <input type="checkbox" className={styles.customCheckbox} />
                                     <span className={styles.checkmark}></span>
                                     Keep me logged in
-                                </label>
+                                </label> */}
 
-                                <span className={styles.forgotPassword} onClick={() => alert("Redirect to forgot password page")}>
+                                {/* <span className={styles.forgotPassword} onClick={() => alert("Redirect to forgot password page")}>
                                     Forgot password?
-                                </span>
+                                </span> */}
                             </div><br />
                             <button className={styles.loginBtn} onClick={handleLogin}>
                                 {loading ? <Loader size={25} /> : "Login"}

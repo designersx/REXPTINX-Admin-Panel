@@ -1,8 +1,7 @@
 import axios from "axios";
-export const API_URL = "https://rexptin.truet.net/api/"
-export const RETELL_API_URL =  process.env.REACT_APP_RETELL_API_URL||"https://api.retellai.com";
+export const API_URL =process.env.REACT_APP_API_URL
+export const RETELL_API_URL =  process.env.REACT_APP_RETELL_API_URL
 export const RETELL_API_KEY = process.env.REACT_APP_RETELL_API_KEY
-// console.log(process.env.REACT_APP_RETELL_API_URL)
 const TOKEN = localStorage.getItem("token");
 const getAuthHeaders = () => {
 
@@ -29,7 +28,7 @@ export const createRole = async (roleData) => {
     }
 };
 export const retrieveRoleById = async (id) => {
-    return await axios.get(`${API_URL}admin/roleGet/${id}`, getAuthHeaders()).then((res) => res.data);
+    return await axios.get(`${API_URL}admin/getRole/${id}`, getAuthHeaders()).then((res) => res.data);
 };
 export const retrieveAllRoles = async () => {
     try {
@@ -87,7 +86,8 @@ export const deleteUser = async (id) => {
 export const retrieveAllRegisteredUsers = async () => {
     try {
         const response = await axios.get(`${API_URL}endusers/getAllUsers`, getAuthHeaders());
-        return response;
+        
+        return response.data.users;
     } catch (error) {
         if (error.response) {
             return error.response;
