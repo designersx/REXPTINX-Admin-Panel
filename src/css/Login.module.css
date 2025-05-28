@@ -1,0 +1,158 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
+* {
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.container {
+  min-height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background: linear-gradient(135deg, #1c1c1c, #2c2c2c); */
+  padding: 1rem;
+}
+
+.card {
+  background-color: #ffffff;
+  padding: 3rem 2.5rem;
+  border-radius: 20px;
+  /* box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3); */
+  border: 1px solid #d5e0d5;
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.title {
+  margin-bottom: 2rem;
+  font-size: 28px;
+  font-weight: 600;
+  color: #222;
+}
+
+.input {
+  width: 100%;
+  padding: 1rem 1rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid  black;
+  border-radius: 12px;
+  font-size: 15px;
+  background-color: #f5f5f5;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.input:focus {
+  outline: none;
+ border: 2px solid black;;
+  box-shadow: black;
+  background-color: #fff;
+}
+
+.loginBtn {
+  background-color: #108a00;
+  color:white;
+  font-weight: 600;
+  border: none;
+  padding: 1rem;
+  width: 100%;
+  border-radius: 12px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+.emailText {
+  padding-left: 6px;
+  padding-top: 20px;
+  color: #181818;
+  font-size: 18px;
+  font-weight: 500;
+}
+.loginBtn:hover {
+
+  transform: translateY(-2px);
+}
+
+.registerText {
+  margin-top: 1.5rem;
+  font-size: 14px;
+  color: #555;
+}
+
+.registerLink {
+  color: black;
+  cursor: pointer;
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.optionsRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 8px 0 12px;
+}
+
+.checkboxContainer {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  color: black;
+  font-weight: 600;
+  gap: 8px;
+  position: relative;
+  cursor: pointer;
+}
+
+/* Hide default checkbox */
+.customCheckbox {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Custom box style */
+.checkmark {
+  height: 18px;
+  width: 18px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  display: inline-block;
+  position: relative;
+  transition: border-color 0.2s ease-in-out;
+}
+
+/* Checked state: green border */
+.customCheckbox:checked + .checkmark {
+  border-color: #108a00;
+}
+
+/* Green checkmark when checked */
+.customCheckbox:checked + .checkmark::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 1px;
+  width: 4px;
+  height: 9px;
+  border: solid #108a00;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+
+.forgotPassword {
+  font-size: 16px;
+  color: #108a00;
+  cursor: pointer;
+  font-weight: 600;
+  /* text-decoration: underline; */
+}

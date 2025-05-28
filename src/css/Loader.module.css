@@ -1,0 +1,47 @@
+.loaderWrapper {
+    text-align: center;
+  }
+  
+  .cardHeader {
+    font-weight: bold;
+    font-size: 18px;
+    color: #004680;
+  }
+  
+  .cardBody {
+    /* padding: 20px; */
+  }
+  
+  .svg {
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .loaderCircle1 {
+    animation: rotateCounterClockwise 2s linear infinite;
+    transform-origin: center;
+  }
+  
+  .loaderCircle2 {
+    animation: rotateClockwise 2s linear infinite;
+    transform-origin: center;
+  }
+  
+  @keyframes rotateCounterClockwise {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(-360deg);
+    }
+  }
+  
+  @keyframes rotateClockwise {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  

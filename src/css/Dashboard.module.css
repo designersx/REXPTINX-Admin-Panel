@@ -1,0 +1,11 @@
+.dashboardLayout {
+    display: flex;
+    height: 100%;
+  }
+  
+  .dashboardContent {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #ffffff;
+  }
+  

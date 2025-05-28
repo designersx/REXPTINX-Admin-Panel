@@ -1,0 +1,95 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
+.settings {
+    font-family: 'Montserrat', sans-serif;
+    padding: 2rem;
+}
+
+.heading {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+.container {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.form {
+    flex: 1;
+    max-width: 550px;
+    background: #f7f7f7;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.formGroup {
+    margin-bottom: 1rem;
+}
+
+.formGroup label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: black;
+}
+
+.formGroup input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.saveButton {
+    background-color:black;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;;
+}
+
+.viewSection {
+    flex: 1;
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+}
+
+.viewSection h3 {
+    margin-bottom: 1rem;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.viewRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    gap: 1rem;
+}
+
+.viewRow span {
+    flex: 1;
+    text-align: right;
+    font-weight: 500;
+}
+
+.viewRow button {
+    background-color:black;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: 600;
+    color: white;
+}

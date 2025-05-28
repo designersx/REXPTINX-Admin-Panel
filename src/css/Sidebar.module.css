@@ -1,0 +1,164 @@
+.sidebar {
+  height: 100vh;
+  color: #cfd8dc;
+  padding: 20px 10px;
+  transition: width 0.3s ease;
+  overflow-x: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+}
+
+.open {
+  width: 250px;
+  align-items: flex-start;
+}
+
+.closed {
+  width: 60px;
+  align-items: center;
+}
+
+.sidebar.closed li {
+  justify-content: center !important;
+  padding: 5px 5px;
+
+}
+
+.sidebar.closed .activeTab {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background-color: black;
+  color: white;
+}
+
+.sidebar.closed .activeTab .icon {
+  padding: 1px;
+  /* margin-left: 5px; */
+  font-size: 25px;
+  color: white !important;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+}
+
+.sidebar li {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 8px 10px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 5px;
+  color: black;
+}
+
+.icon {
+  font-size: 24px !important;
+  color: black;
+  min-width: 24px;
+  display: inline-block;
+}
+
+
+.activeTab {
+  background-color: black;
+  color: white !important;
+  width: 200px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  gap: 10px;
+  border-radius: 10px;
+  color: black;
+}
+
+.activeTab .icon {
+  color: white !important;
+  font-size: 25px !important;
+}
+
+.toggleButton {
+  cursor: pointer;
+  color: #000;
+  margin-bottom: 30px;
+  font-size: 24px;
+  align-self: flex-end;
+}
+
+.toggleButton b {
+  padding-right: 24px;
+  font-weight: 500;
+}
+
+.topOpenCloseIcon {
+  font-size: 27px;
+  color: black;
+}
+
+
+
+
+
+
+
+
+
+
+
+.logoutButton {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 12px 10px;
+  width: 100%;
+  font-size: 16px;
+  text-align: left;
+}
+
+.logoContainer {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+}
+
+.logoIcon {
+  font-size: 30px;
+  color: black;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  padding: 8px 20px;
+  color: black !important;
+
+  text-decoration: none !important;
+  transition: background 0.3s ease;
+  cursor: pointer;
+}
+
+
+.activeTab {
+  background-color: black;
+  /* Active background */
+  font-weight: bold;
+  color: white !important;
+  /* Make active text white */
+}
