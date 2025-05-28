@@ -30,7 +30,7 @@ const ViewRegisteredUsers = () => {
         try {
             setLoading(true);
             const response = await retrieveAllRegisteredUsers();
-            setRoleData(response.data.users);
+            setRoleData(response);
         } catch (error) {
             console.log(error);
         } finally {
