@@ -17,6 +17,7 @@ import PaymentPage from './pages/paymentPage';
 import ViewRegisteredUsers from './pages/ViewRegisteredUsers';
 import ViewAnalytics from './pages/ViewAnalytics';
 import ViewAgents from './pages/ViewAgents';
+import AgentDetails from './pages/AgentDetails';
 
 
 function App() {
@@ -63,7 +64,9 @@ function App() {
                  <Route path="analytics" element={<ViewAnalytics />} />
                     <Route path="agents" element={<ViewAgents/>} />
             </Route>
+            
           )}
+          <Route path = '/view-users-agent-details/:userId' element={<AgentDetails/>} />
         </Routes>
       </Router>
     </RolePermissionsProvider>
