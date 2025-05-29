@@ -8,6 +8,7 @@ import Loader from '../components/Loader';
 import { useNavigate } from 'react-router-dom';
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { useSidebarPermissions } from '../context/AccessControlContext';
+import { GrView } from "react-icons/gr";
 const ViewRegisteredUsers = () => {
     const [selectedTask, setSelectedTask] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -52,6 +53,7 @@ const ViewRegisteredUsers = () => {
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentTasks = filteredTasks?.slice(indexOfFirstItem, indexOfLastItem);
+    console.log({currentTasks})
 
     const handlePrevPage = () => {
         if (currentPage > 1) setCurrentPage(prev => prev - 1);
@@ -133,6 +135,7 @@ const ViewRegisteredUsers = () => {
                                                 {canEdit && <FaEdit size={23} color="black" />}
 
                                                 {canDelete && <FaTrash size={23} color="black" />}
+                                                {canView && <GrView onClick={()=>navigate(`/view-users-agent-details/${task.userId}`)} size={23} color="black" />}
 
                                             </div>
 
