@@ -1,0 +1,52 @@
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  background-color: white;
+
+}
+
+.card {
+  /* background-color: #111; */
+  color: white;
+  padding: 20px;
+  border: 1px solid #444;
+  border-radius: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 15px;
+  border: 2px solid #fff;
+}
+
+.role {
+  /* color: #aaa; */
+  font-size: 14px;
+}
+
+.details p {
+  margin: 6px 0;
+  font-size: 14px;
+  color: black;
+}
+
+.details strong {
+  /* color: white; */
+}
