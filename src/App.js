@@ -29,8 +29,34 @@ function App() {
     window.addEventListener('storage', checkAuth);
     return () => window.removeEventListener('storage', checkAuth);
   }, []);
+useEffect(() => {
+  const container = document.getElementById("rexWidgetContainer");
+  if (!container) return;
 
+  const script = document.createElement("script");
+  script.src = "https://melodic-jelly-be17df.netlify.app/index.js";
+  script.async = true;
+  document.body.appendChild(script);
+
+  return () => {
+    document.body.removeChild(script);
+  };
+}, []);
+  // useEffect(() => {
+  //   const script = document.createElement("script");
+  //   // script.src = "https://67c97f33b59fab2d9e398d19--elegant-moxie-e0c22c.netlify.app/reviews.js"; 
+  //   script.async = true;
+  //   document.body.appendChild(script);
+
+  //   return () => {
+  //     document.body.removeChild(script);
+  //   };
+  // }, []);
   return (
+    <>
+      <div id="Lk68n4f78GaVMEQQ@EFG"></div> 
+
+
     <RolePermissionsProvider>
       <Router>
         <Routes>
@@ -70,6 +96,7 @@ function App() {
         </Routes>
       </Router>
     </RolePermissionsProvider>
+    </>
   );
 }
 
