@@ -70,7 +70,7 @@ export const retrieveAllUsers = async () => {
 }
 export const deleteUser = async (id) => {
     try {
-        const response = await axios(`${API_URL}admin/deleteUser/${id}`)
+        const response = await axios.delete(`${API_URL}admin/deleteUser/${id}`)
         return response;
 
 

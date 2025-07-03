@@ -7,6 +7,7 @@ import Modal from '../Modal/Modal';
 import Loader from '../components/Loader';
 import { useNavigate } from 'react-router-dom';
 import { FaEdit, FaTrash } from "react-icons/fa";
+import Swal from 'sweetalert2';
 import { useSidebarPermissions } from '../context/AccessControlContext';
 const ViewUsers = () => {
     const [selectedTask, setSelectedTask] = useState(null);
@@ -17,6 +18,9 @@ const ViewUsers = () => {
     const [itemsPerPage] = useState(5);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedTasks, setSelectedTasks] = useState([]);
+    const [editingUser, setEditingUser] = useState(null);
+const [editFormData, setEditFormData] = useState({ firstName: '', lastName: '', email: '', phoneNumber: '' });
+
     const token = localStorage.getItem('token');
     const decodedToken = decodeToken(token);
     const userId = decodedToken.user.id;
@@ -42,9 +46,12 @@ const ViewUsers = () => {
     };
 
 
-    const filteredTasks = roleData?.filter(task =>
-        task.email.toLowerCase().includes(searchQuery.trim().toLowerCase())
-    );
+   const filteredTasks = Array.isArray(roleData)
+  ? roleData?.filter(task =>
+      task.email.toLowerCase().includes(searchQuery.trim().toLowerCase())
+    )
+  : [];
+
 
 
     const isAllSelected = filteredTasks?.length > 0 && selectedTasks?.length === filteredTasks?.length;
@@ -65,14 +72,17 @@ const ViewUsers = () => {
         navigate("/dashboard/addUsers")
     }
     //delete users
-    const handleDeleteUsers=async()=>{
-        try {
-          const response =await deleteUser(userId)
+   const handleDeleteUsers = async (id) => {
+  try {
+    const response = await deleteUser(id);
+    console.log(response.data);
+    Swal.fire("User deleted Successfully")
+    fetchUsers(); // Refresh list
+  } catch (error) {
+    console.error("Error deleting user:", error);
+  }
+};
 
-        } catch (error) {
-            
-        }
-    }
     useEffect(() => {
         fetchUsers()
     }, [])
@@ -130,9 +140,35 @@ const ViewUsers = () => {
                                         <td>
                                             <div className={styles.tdBtn}>
 
-                                                {canEdit && <FaEdit size={23} color="black" />}
+                                           {canEdit && (
+  <FaEdit
+    size={23}
+    color="black"
+    style={{ cursor: 'pointer', marginRight: '10px' }}
+    onClick={() => {
+      setEditingUser(task.id); // or task.userId
+      setEditFormData({
+        firstName: task.firstName || '',
+        lastName: task.lastName || '',
+        email: task.email || '',
+        phoneNumber: task.phoneNumber || '',
+        password:task.password || ''
+      });
+      setShowModal(true);
+    }}
+  />
+)}
 
-                                                {canDelete && <FaTrash size={23} color="black" />}
+
+                                             {canDelete && (
+  <FaTrash
+    size={23}
+    color="black"
+    style={{ cursor: 'pointer' }}
+    onClick={() => handleDeleteUsers(task.id)}
+  />
+)}
+
 
                                             </div>
 
@@ -156,6 +192,71 @@ const ViewUsers = () => {
                         </div>
                     )}
                 </div>
+                <Modal isOpen={showModal} onClose={() => setShowModal(false)} width="400px">
+  <h3>Edit User</h3>
+  <form
+    onSubmit={async (e) => {
+      e.preventDefault();
+      try {
+        await axios.put(`${API_URL}admin/updateadminUser/${editingUser}`, editFormData);
+        setShowModal(false);
+        Swal.fire("User updated Successfully")
+        setEditingUser(null);
+        setEditFormData({ firstName: '', lastName: '', email: '', phoneNumber: '',password:'' });
+        fetchUsers();
+      } catch (err) {
+        console.error("Update failed:", err);
+      }
+    }}
+  >
+    <div style={{ marginBottom: '10px' }}>
+      <label>First Name:</label><br />
+      <input
+        type="text"
+        value={editFormData.firstName}
+        onChange={(e) => setEditFormData({ ...editFormData, firstName: e.target.value })}
+        style={{ width: '100%' }}
+      />
+    </div>
+    <div style={{ marginBottom: '10px' }}>
+      <label>Last Name:</label><br />
+      <input
+        type="text"
+        value={editFormData.lastName}
+        onChange={(e) => setEditFormData({ ...editFormData, lastName: e.target.value })}
+        style={{ width: '100%' }}
+      />
+    </div>
+    <div style={{ marginBottom: '10px' }}>
+      <label>Email:</label><br />
+      <input
+        type="email"
+        value={editFormData.email}
+        onChange={(e) => setEditFormData({ ...editFormData, email: e.target.value })}
+        style={{ width: '100%' }}
+      />
+    </div>
+    <div style={{ marginBottom: '10px' }}>
+      <label>Phone Number:</label><br />
+      <input
+        type="text"
+        value={editFormData.phoneNumber}
+        onChange={(e) => setEditFormData({ ...editFormData, phoneNumber: e.target.value })}
+        style={{ width: '100%' }}
+      />
+    </div><div style={{ marginBottom: '10px' }}>
+      <label>Email:</label><br />
+      <input
+        type="email"
+        value={editFormData.email}
+        onChange={(e) => setEditFormData({ ...editFormData, email: e.target.value })}
+        style={{ width: '100%' }}
+      />
+    </div>
+    <button type="submit" style={{ padding: '6px 15px' }}>Update</button>
+  </form>
+</Modal>
+
             </div>
 
 

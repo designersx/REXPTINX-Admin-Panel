@@ -82,7 +82,7 @@ const ViewRole = () => {
             setLoading(false);
         }
     };
-    const filteredTasks = roleData.filter(task =>
+    const filteredTasks = roleData?.filter(task =>
         task.title.toLowerCase().includes(searchQuery.trim().toLowerCase())
     );
     const handleCheckboxChange = (taskId) => {

@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { useSidebarPermissions } from '../context/AccessControlContext';
 import { GrView } from "react-icons/gr";
+import Swal from 'sweetalert2';
 const ViewRegisteredUsers = () => {
     const [selectedTask, setSelectedTask] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -18,6 +19,9 @@ const ViewRegisteredUsers = () => {
     const [itemsPerPage] = useState(5);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedTasks, setSelectedTasks] = useState([]);
+    const [editingUser, setEditingUser] = useState(null);
+const [editFormData, setEditFormData] = useState({ name: '', email: '', phone: '' });
+
     const token = localStorage.getItem('token');
     const decodedToken = decodeToken(token);
     const userId = decodedToken.user.id;
@@ -53,7 +57,7 @@ const ViewRegisteredUsers = () => {
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentTasks = filteredTasks?.slice(indexOfFirstItem, indexOfLastItem);
-    console.log({currentTasks})
+    console.log({ currentTasks })
 
     const handlePrevPage = () => {
         if (currentPage > 1) setCurrentPage(prev => prev - 1);
@@ -67,12 +71,13 @@ const ViewRegisteredUsers = () => {
         navigate("/dashboard/addUsers")
     }
     //delete users
-    const handleDeleteUsers = async () => {
+    const handleDeleteUsers = async (userId) => {
         try {
-            const response = await deleteUser(userId)
-
+            const response = await axios.delete(`${process.env.REACT_APP_API_URL}agent/UserDelete/${userId}`)
+            console.log(response)
+fetchUsers()
         } catch (error) {
-
+            console.log(error)
         }
     }
     useEffect(() => {
@@ -111,6 +116,8 @@ const ViewRegisteredUsers = () => {
                                 <th>Email</th>
 
                                 <th>Phone number</th>
+                                <th>Referred By</th>
+                               
                                 <th>Actions</th>
 
                             </tr>
@@ -125,17 +132,63 @@ const ViewRegisteredUsers = () => {
                                     <tr key={task.id}>
 
 
-                                        <td>{task.name}</td>
+                                        <td>{task.name || "NA"}</td>
                                         <td>{task.email || "NA"}</td>
 
-                                        <td>{task.phone || "NA"}</td>
+                                        <td>{task.phone || "N/A"}</td>
+                                         <td>
+  {task.referredByName || "N/A"}
+  {task.referredBy ? ` (${task.referredBy})` : ""}
+</td>
+
+   
                                         <td>
                                             <div className={styles.tdBtn}>
 
-                                                {canEdit && <FaEdit size={23} color="black" />}
+                                              {canEdit && (
+  <FaEdit
+    size={23}
+    color="black"
+    style={{ cursor: 'pointer', marginRight: '10px' }}
+    onClick={() => {
+      setEditingUser(task.userId);
+      setEditFormData({
+        name: task.name || '',
+        email: task.email || '',
+        phone: task.phone || ''
+      });
+      setShowModal(true);
+    }}
+  />
+)}
 
-                                                {canDelete && <FaTrash size={23} color="black" />}
-                                                {canView && <GrView onClick={()=>navigate(`/view-users-agent-details/${task.userId}`)} size={23} color="black" />}
+
+                                                {canDelete && (
+                                                    <FaTrash
+                                                        size={23}
+                                                        color="black"
+                                                        style={{ cursor: 'pointer' }}
+                                                        onClick={() => handleDeleteUsers(task.userId)}
+                                                    />
+                                                )}
+                                                {canView && (
+                                                    <GrView
+                                                        onClick={() => navigate(`/view-users-agent-details/${task.userId}`)}
+                                                        size={23}
+                                                        color="black"
+                                                        title="See All Agents"
+                                                    />
+                                                )}
+
+                                                {canView && (
+                                                    <GrView
+                                                        onClick={() => navigate(`/view-users-agent-details/${task.userId}`)}
+                                                        size={23}
+                                                        color="black"
+                                                        title="See Knowledge Base"
+                                                    />
+                                                )}
+
 
                                             </div>
 
@@ -161,6 +214,51 @@ const ViewRegisteredUsers = () => {
                 </div>
             </div>
 
+<Modal isOpen={showModal} onClose={() => setShowModal(false)} width="400px">
+  <h3>Edit User</h3>
+  <form
+    onSubmit={async (e) => {
+      e.preventDefault();
+      try {
+        await axios.put(`${process.env.REACT_APP_API_URL}endusers/updateendusers/${editingUser}`, editFormData);
+        setShowModal(false);
+        Swal.fire("Updated User Successfully")
+        fetchUsers();
+      } catch (err) {
+        console.error("Update failed:", err);
+      }
+    }}
+  >
+    <div style={{ marginBottom: '10px' }}>
+      <label>Name:</label><br />
+      <input
+        type="text"
+        value={editFormData.name}
+        onChange={(e) => setEditFormData({ ...editFormData, name: e.target.value })}
+        style={{ width: '100%' }}
+      />
+    </div>
+    <div style={{ marginBottom: '10px' }}>
+      <label>Email:</label><br />
+      <input
+        type="email"
+        value={editFormData.email}
+        onChange={(e) => setEditFormData({ ...editFormData, email: e.target.value })}
+        style={{ width: '100%' }}
+      />
+    </div>
+    <div style={{ marginBottom: '10px' }}>
+      <label>Phone:</label><br />
+      <input
+        type="text"
+        value={editFormData.phone}
+        onChange={(e) => setEditFormData({ ...editFormData, phone: e.target.value })}
+        style={{ width: '100%' }}
+      />
+    </div>
+    <button type="submit" style={{ padding: '6px 15px' }}>Update</button>
+  </form>
+</Modal>
 
         </>
     );

@@ -107,7 +107,7 @@ const ViewAgents = () => {
                         <thead>
                             <tr>
                                 <th>Agent Name</th>
-                                <th>Agent Type</th>
+                                {/* <th>Agent Type</th> */}
                                 <th>Voice</th>
 
                                 <th>Phone</th>
@@ -129,7 +129,7 @@ const ViewAgents = () => {
                                             ? `${task.agent_name.slice(0, 20)}...`
                                             : task.agent_name}
                                         </td>
-                                        <td>{task.agent_type }</td>
+                                        {/* <td>{task.agent_type }</td> */}
                                         <td style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                                             {task.avatar_url ? (
                                                 <img
