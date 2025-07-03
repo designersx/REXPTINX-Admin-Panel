@@ -53,7 +53,7 @@ const ViewRegisteredUsers = () => {
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentTasks = filteredTasks?.slice(indexOfFirstItem, indexOfLastItem);
-    console.log({currentTasks})
+    console.log({ currentTasks })
 
     const handlePrevPage = () => {
         if (currentPage > 1) setCurrentPage(prev => prev - 1);
@@ -73,7 +73,7 @@ const ViewRegisteredUsers = () => {
             console.log(response)
 
         } catch (error) {
-console.log(error)
+            console.log(error)
         }
     }
     useEffect(() => {
@@ -126,7 +126,7 @@ console.log(error)
                                     <tr key={task.id}>
 
 
-                                        <td>{task.name  || "NA"}</td>
+                                        <td>{task.name || "NA"}</td>
                                         <td>{task.email || "NA"}</td>
 
                                         <td>{task.phone || "NA"}</td>
@@ -135,31 +135,31 @@ console.log(error)
 
                                                 {canEdit && <FaEdit size={23} color="black" />}
 
-                                               {canDelete && (
-  <FaTrash
-    size={23}
-    color="black"
-    style={{ cursor: 'pointer' }}
-    onClick={() => handleDeleteUsers(task.userId)}
-  />
-)}
-                                               {canView && (
-  <GrView
-    onClick={() => navigate(`/view-users-agent-details/${task.userId}`)}
-    size={23}
-    color="black"
-    title="See All Agents"
-  />
-)}
+                                                {canDelete && (
+                                                    <FaTrash
+                                                        size={23}
+                                                        color="black"
+                                                        style={{ cursor: 'pointer' }}
+                                                        onClick={() => handleDeleteUsers(task.userId)}
+                                                    />
+                                                )}
+                                                {canView && (
+                                                    <GrView
+                                                        onClick={() => navigate(`/view-users-agent-details/${task.userId}`)}
+                                                        size={23}
+                                                        color="black"
+                                                        title="See All Agents"
+                                                    />
+                                                )}
 
-{canView && (
-  <GrView
-    onClick={() => navigate(`/view-users-agent-details/${task.userId}`)}
-    size={23}
-    color="black"
-    title="See Knowledge Base"
-  />
-)}
+                                                {canView && (
+                                                    <GrView
+                                                        onClick={() => navigate(`/view-users-agent-details/${task.userId}`)}
+                                                        size={23}
+                                                        color="black"
+                                                        title="See Knowledge Base"
+                                                    />
+                                                )}
 
 
                                             </div>

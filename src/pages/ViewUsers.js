@@ -43,7 +43,7 @@ const ViewUsers = () => {
 
 
    const filteredTasks = Array.isArray(roleData)
-  ? roleData.filter(task =>
+  ? roleData?.filter(task =>
       task.email.toLowerCase().includes(searchQuery.trim().toLowerCase())
     )
   : [];

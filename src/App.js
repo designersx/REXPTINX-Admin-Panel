@@ -20,6 +20,7 @@ import ViewAgents from './pages/ViewAgents';
 import AgentDetails from './pages/AgentDetails';
 import Partners from './pages/Partners';
 import ViewKnowledgeBase from './pages/ViewKnowledgeBase';
+import PromptsDetails from './components/PromptsDetails';
 
 
 function App() {
@@ -99,6 +100,7 @@ useEffect(() => {
             
           )}
           <Route path = '/view-users-agent-details/:userId' element={<AgentDetails/>} />
+          <Route path = '/view-prompt-agent-details/:llmId' element={<PromptsDetails/>} />
         </Routes>
       </Router>
     </RolePermissionsProvider>
