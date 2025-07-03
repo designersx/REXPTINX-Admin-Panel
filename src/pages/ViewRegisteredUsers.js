@@ -182,7 +182,7 @@ fetchUsers()
 
                                                 {canView && (
                                                     <GrView
-                                                        onClick={() => navigate(`/view-users-agent-details/${task.userId}`)}
+                                                        onClick={() => navigate(`/viewKnowledgeBase/${task.userId}`)}
                                                         size={23}
                                                         color="black"
                                                         title="See Knowledge Base"
