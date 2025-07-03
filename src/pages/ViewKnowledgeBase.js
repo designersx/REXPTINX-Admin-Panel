@@ -158,7 +158,7 @@ const totalPages = Math.ceil(filteredAgents.length / itemsPerPage);
     <th>Size</th>
     <th>Service</th>
     <th>Website</th>
-    <th>Knowledge Base Status</th>
+    <th>Status</th>
     <th>Actions</th>
   </tr>
 </thead>
@@ -200,15 +200,25 @@ const totalPages = Math.ceil(filteredAgents.length / itemsPerPage);
 
       {/* Business Website */}
       <td title={agent.businessDetails?.BusinesswebUrl || 'N/A'}>
-  {agent.businessDetails?.BusinesswebUrl
-    ? agent.businessDetails.BusinesswebUrl.length > 25
+ {agent.businessDetails?.BusinesswebUrl ? (
+  <a
+    href={agent.businessDetails.BusinesswebUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    style={{ color: '#007bff', textDecoration: 'underline' }}
+  >
+    {agent.businessDetails.BusinesswebUrl.length > 25
       ? agent.businessDetails.BusinesswebUrl.substring(0, 25) + '...'
-      : agent.businessDetails.BusinesswebUrl
-    : 'N/A'}
+      : agent.businessDetails.BusinesswebUrl}
+  </a>
+) : (
+  'N/A'
+)}
+
 </td>
 <td>
    {agent.businessDetails?.knowledgeBaseStatus === null || agent.businessDetails?.knowledgeBaseStatus === undefined
-  ? "Not Added"
+  ? "N/A"
   : agent.businessDetails.knowledgeBaseStatus === true
   ? "Active"
   : "Inactive"}
