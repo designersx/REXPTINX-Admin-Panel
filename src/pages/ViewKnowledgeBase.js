@@ -23,17 +23,18 @@ console.log(`${process.env.REACT_BASE_URL}`)
  const getAgents = async () => {
   try {
     setLoading(true);
-    const res = await axios.get(`${process.env.REACT_APP_API_URL}/agent/getAgentBasedUser/${userId}`);
+    const res = await axios.get(`${process.env.REACT_APP_API_URL}agent/getKnowledgeBaseBasedUser/${userId}`);
     const agentsData = res.data.agents || [];
     setAgents(agentsData);
     setFilteredAgents(agentsData); // Initialize filtered list
-    setTotalCount(res.data.totalCount || 0);
+   setTotalCount(agentsData.length);
+
     setError('');
     setLoading(false);
   } catch (err) {
     console.error(err);
     setLoading(false);
-    setError('No agent found');
+    setError('No Knowledge base found');
     setAgents([]);
     setFilteredAgents([]);
     setTotalCount(0);
@@ -54,43 +55,29 @@ useEffect(() => {
 }, [searchQuery, agents]);
 
 
-const handleDeleteAgent = async (agentId) => {
+const handleDeleteAgent = async (knowledgeBaseId) => {
   const result = await Swal.fire({
-    title: 'What do you want to do?',
-    text: "You can either delete or deactivate this agent.",
+    title: 'Are you sure?',
+    text: "Do you want to delete this Knowledge Base?",
     icon: 'warning',
     showCancelButton: true,
-    showDenyButton: true,
-    confirmButtonText: 'Delete',
-    denyButtonText: 'Deactivate',
+    confirmButtonText: 'Yes, Delete',
     cancelButtonText: 'Cancel',
     confirmButtonColor: '#d33',
-    denyButtonColor: '#f0ad4e',
     cancelButtonColor: '#3085d6',
   });
 
   if (result.isConfirmed) {
-    // Delete logic
     try {
-      setLoading(true)
-      await axios.delete(`${process.env.REACT_APP_API_URL}/agent/AgentDelete/hard/${agentId}`);
-      setLoading(false)
-      Swal.fire('Deleted!', 'Agent has been deleted.', 'success');
-      getAgents();
+      setLoading(true);
+      await axios.delete(`${process.env.REACT_APP_API_URL}/agent/inactiveknowledegeBase/${knowledgeBaseId}`);
+      setLoading(false);
+      Swal.fire('Deleted!', 'Knowledge base has been deleted.', 'success');
+      getAgents(); // Refresh the list
     } catch (error) {
-      console.error("Delete failed:", error);
-      Swal.fire('Error', 'Failed to delete the agent.', 'error');
-    }
-  } else if (result.isDenied) {
-    // Deactivate logic
-    try {setLoading(true)
-      await axios.delete(`${process.env.REACT_APP_API_URL}/agent/delete-user-agent/${agentId}`);
-      setLoading(false)
-      Swal.fire('Deactivated!', 'Agent has been deactivated.', 'success');
-      getAgents();
-    } catch (error) {
-      console.error("Deactivation failed:", error);
-      Swal.fire('Error', 'Failed to deactivate the agent.', 'error');
+      console.error("Deletion failed:", error);
+      setLoading(false);
+      Swal.fire('Error', 'Failed to delete the knowledge base.', 'error');
     }
   }
 };
@@ -107,6 +94,16 @@ const totalPages = Math.ceil(filteredAgents.length / itemsPerPage);
     if (!name) return '';
     return name.length > 15 ? name.substring(0, 15) + '...' : name;
   };
+  const parseService = (services) => {
+  if (!services) return [];
+  try {
+    return typeof services === 'string' ? JSON.parse(services) : services;
+  } catch (err) {
+    console.error("Error parsing BusinessService:", err);
+    return [];
+  }
+};
+
 
   return (
     <Layout>
@@ -120,7 +117,7 @@ const totalPages = Math.ceil(filteredAgents.length / itemsPerPage);
   >
     ←
   </button> */}
-  <h2>Agents Details ({totalCount})</h2>
+  <h2>Knowledge Base Details ({totalCount})</h2>
 </div>
 
 <div className={style.inputGroup}>
@@ -144,59 +141,87 @@ const totalPages = Math.ceil(filteredAgents.length / itemsPerPage);
 ) : (
   <>
     {filteredAgents.length === 0 ? (
-      <p style={{ color: '#004680', textAlign: 'center', marginTop: '9rem', fontSize: '30px', fontWeight: '600' }}>
-        No agent found
-      </p>
+     <div style={{background:'white',height:'300px',width:'100%',boxShadow: "inherit",display:'flex',justifyContent:'center'}}> <p style={{ color: '#004680', textAlign: 'center', marginTop: '9rem', fontSize: '30px', fontWeight: '600' }}></p> <p style={{ color: '#004680', textAlign: 'center', marginTop: '9rem', fontSize: '30px', fontWeight: '600' }}>
+        No Knowledge base found
+      </p></div>
     ) : (
       <>
         <table className={style.agentTable}>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Avatar</th>
-              <th>Agent ID</th>
-              <th>Agent Name</th>
-              <th>Role</th>
-              <th>Plan</th>
-              <th>Status</th>
-              <th>Mins Left</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {paginatedAgents.map((agent, index) => (
-              <tr key={agent.agent_id}>
-                <td>{startIndex + index + 1}</td>
-                <td>
-                  <img
-                    src={agent.avatar ? `${process.env.REACT_APP_BASE_URL}/${agent.avatar}` : '/images/default-image.png'}
-                    alt="Avatar"
-                    style={{ width: '40px', height: '40px', borderRadius: '50%' }}
-                  />
-                </td>
-                <td>{agent.agent_id}</td>
-                <td title={agent.agentName}>{truncateName(agent.agentName)}</td>
-                <td>{agent.agentRole}</td>
-                <td>{agent.agentPlan}</td>
-                <td style={{ color: agent.agentStatus ? 'green' : 'red', fontWeight: 'bold' }}>
-                  {agent.agentStatus ? 'Active' : 'Deactivated'}
-                </td>
-                <td>{Math.floor(agent.mins_left / 60)}</td>
-                <td>
-                  {(agent.agentPlan === 'free' &&
-                    ((new Date() - new Date(agent.createdAt)) / (1000 * 60 * 60 * 24) <= 2) &&
-                    (((1200 - agent.mins_left) / 1200) * 100 < 5)) ? (
-                    <FaTrash
-                      size={23}
-                      color="black"
-                      style={{ cursor: 'pointer' }}
-                      onClick={() => handleDeleteAgent(agent.agent_id)}
-                    />
-                  ) : '-'}
-                </td>
-              </tr>
-            ))}
-          </tbody>
+         <thead>
+  <tr>
+    <th>#</th>
+    <th>Knowledge Base</th>
+    <th>Agent Name</th>
+    <th>Agent ID</th>
+     <th>Business Name</th>
+    <th>Type</th>
+    <th>Size</th>
+    <th>Service</th>
+    <th>Website</th>
+    <th>Actions</th>
+  </tr>
+</thead>
+<tbody>
+  {paginatedAgents.map((agent, index) => (
+    <tr key={agent.agent_id}>
+      <td>{startIndex + index + 1}</td>
+
+      {/* Knowledge Base Name */}
+      <td>
+        {agent.businessDetails?.knowledgeBaseName
+          ? agent.businessDetails.knowledgeBaseName
+          : <span style={{ color: '#999' }}>N/A</span>}
+      </td>
+
+      {/* Agent Name */}
+      <td title={agent.agentName}>
+        {truncateName(agent.agentName)}
+      </td>
+
+      {/* Agent ID */}
+      <td>{agent.agent_id}</td> {/* Business Name */}
+      <td>{agent.businessDetails?.name || 'N/A'}</td>
+
+      {/* Business Type */}
+      <td>{agent.businessDetails?.BusinessType || 'N/A'}</td>
+
+      {/* Business Size */}
+      <td>{agent.businessDetails?.BusinessSize || 'N/A'}</td>
+
+      {/* Business Service */}
+      <td title={parseService(agent.businessDetails?.BusinessService).join(', ') || 'N/A'}>
+  {parseService(agent.businessDetails?.BusinessService).length > 0
+    ? parseService(agent.businessDetails?.BusinessService).slice(0, 2).join(', ') +
+      (parseService(agent.businessDetails?.BusinessService).length > 2 ? '...' : '')
+    : 'N/A'}
+</td>
+
+
+      {/* Business Website */}
+      <td title={agent.businessDetails?.BusinesswebUrl || 'N/A'}>
+  {agent.businessDetails?.BusinesswebUrl
+    ? agent.businessDetails.BusinesswebUrl.length > 25
+      ? agent.businessDetails.BusinesswebUrl.substring(0, 25) + '...'
+      : agent.businessDetails.BusinesswebUrl
+    : 'N/A'}
+</td>
+
+
+      {/* Action Buttons */}
+      <td>
+      <FaTrash
+  size={23}
+  color="black"
+  title="Delete Knowledge Base"
+  style={{ cursor: 'pointer' }}
+  onClick={() => handleDeleteAgent(agent.knowledgeBaseId)}
+/>
+
+      </td>
+    </tr>
+  ))}
+</tbody>
+
         </table>
 
         {/* Pagination Controls */}

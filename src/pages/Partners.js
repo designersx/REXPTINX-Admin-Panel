@@ -18,7 +18,7 @@ function Partners() {
   const fetchPartners = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/agent/refereedendusers/data`);
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}agent/refereedendusers/data`);
       const data = response.data.endUsers || [];
       setPartners(data);
       setFilteredPartners(data);
