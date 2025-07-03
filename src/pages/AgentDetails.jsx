@@ -24,7 +24,7 @@ function AgentDetails() {
   console.log(agents, "agents")
   const itemsPerPage = 7;
   const navigate = useNavigate();
-  console.log(`${process.env.REACT_BASE_URL}`)
+  console.log(`${process.env.REACT_APP_IMAGE_URL}`)
   const getAgents = async () => {
     try {
       setLoading(true);
@@ -150,9 +150,9 @@ function AgentDetails() {
         ) : (
           <>
             {filteredAgents.length === 0 ? (
-              <p style={{ color: '#004680', textAlign: 'center', marginTop: '9rem', fontSize: '30px', fontWeight: '600' }}>
+                 <div style={{background:'white',height:'300px',width:'100%',boxShadow: "inherit",display:'flex',justifyContent:'center'}}>  <p style={{ color: '#004680', textAlign: 'center', marginTop: '9rem', fontSize: '30px', fontWeight: '600' }}>
                 No agent found
-              </p>
+              </p></div>
             ) : (
               <>
                 <table className={style.agentTable}>
@@ -175,11 +175,13 @@ function AgentDetails() {
                         <td>{startIndex + index + 1}</td>
                         <td>
                           <img
-                            src={agent.avatar ? `${process.env.REACT_APP_BASE_URL}${agent.avatar}` : '/images/default-image.png'}
+                            src={agent.avatar ? `${process.env.REACT_APP_IMAGE_URL}/${agent.avatar}` : '/images/default-image.png'}
                             alt="Avatar"
                             style={{ width: '40px', height: '40px', borderRadius: '50%' }}
                           />
-                        </td>
+                        </td>{
+                          console.log(process.env.REACT_APP_IMAGE_URL)
+                        }
                         <td>{agent.agent_id}</td>
                         <td title={agent.agentName}>{truncateName(agent.agentName)}</td>
                         <td>{agent.agentRole}</td>
