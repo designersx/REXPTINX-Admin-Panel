@@ -175,7 +175,7 @@ function AgentDetails() {
                         <td>{startIndex + index + 1}</td>
                         <td>
                           <img
-                            src={agent.avatar ? `${process.env.REACT_APP_BASE_URL}/${agent.avatar}` : '/images/default-image.png'}
+                            src={agent.avatar ? `${process.env.REACT_APP_IMAGE_URL}/${agent.avatar}` : '/images/default-image.png'}
                             alt="Avatar"
                             style={{ width: '40px', height: '40px', borderRadius: '50%' }}
                           />
