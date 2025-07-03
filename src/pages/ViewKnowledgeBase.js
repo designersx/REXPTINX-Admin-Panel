@@ -17,7 +17,7 @@ function ViewKnowledgeBase() {
   const [searchQuery, setSearchQuery] = useState('');
 const [filteredAgents, setFilteredAgents] = useState([]);
 
-  const itemsPerPage = 7;
+  const itemsPerPage = 5;
   const navigate = useNavigate();
 console.log(`${process.env.REACT_BASE_URL}`)
  const getAgents = async () => {
@@ -146,6 +146,9 @@ const totalPages = Math.ceil(filteredAgents.length / itemsPerPage);
       </p></div>
     ) : (
       <>
+      <div style={{ overflowX: "auto",
+    paddingBottom: "1rem"
+}}>
         <table className={style.agentTable}>
          <thead>
   <tr>
@@ -241,7 +244,7 @@ const totalPages = Math.ceil(filteredAgents.length / itemsPerPage);
   ))}
 </tbody>
 
-        </table>
+        </table></div>
 
         {/* Pagination Controls */}
      {filteredAgents.length > 0 && (
