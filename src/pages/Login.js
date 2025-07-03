@@ -17,17 +17,36 @@ const Login = () => {
     const [popupMessage, setPopupMessage] = useState("");
     const navigate = useNavigate();
     const handleContinue = () => {
-        if (email.trim() === '') {
-            alert('Please enter your email.');
-            return;
-        }
-        setStep(2);
-    };
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (email.trim() === '') {
+        setPopupType("failed");
+        setPopupMessage("Please enter your email.");
+        setShowPopup(true);
+        return;
+    }
+    if (!emailRegex.test(email.trim())) {
+        setPopupType("failed");
+        setPopupMessage("Please enter a valid email address.");
+        setShowPopup(true);
+        return;
+    }
+    setStep(2);
+};
+
     const handleLogin = async () => {
-        if (password.trim() === '') {
-            alert('Please enter your password.');
-            return;
-        }
+      if (password.trim() === '') {
+        setPopupType("failed");
+        setPopupMessage('Please enter your password.');
+        setShowPopup(true);
+        return;
+    }
+
+    if (password.length < 8) {
+        setPopupType("failed");
+        setPopupMessage('Password must be at least 8 characters long.');
+        setShowPopup(true);
+        return;
+    }
         try {
             setLoading(true);
             const res = await axios.post(`${API_URL}admin/login`, { email, password });
@@ -80,6 +99,26 @@ const Login = () => {
                             <button className={styles.loginBtn} onClick={handleContinue}>
                                 Continue
                             </button>
+                             <div style={{
+  position: 'fixed',
+  bottom: '10px',
+  right: '10px',
+  backgroundColor: '#000',
+  color: '#fff',
+  padding: '6px 12px',
+  borderRadius: '8px',
+  fontSize: '12px',
+  fontWeight: '500',
+  opacity: 0.7,
+  transition: 'opacity 0.3s ease',
+  zIndex: 1000,
+}}
+  onMouseEnter={e => e.currentTarget.style.opacity = 1}
+  onMouseLeave={e => e.currentTarget.style.opacity = 0.7}
+>
+  <p style={{ margin: 0 }}>Made with ❤️ by DesignersX</p>
+</div>
+
                         </>
                     )}
 
@@ -106,7 +145,28 @@ const Login = () => {
                             <button className={styles.loginBtn} onClick={handleLogin}>
                                 {loading ? <Loader size={25} /> : "Login"}
                             </button>
+                            <div style={{
+  position: 'fixed',
+  bottom: '0px',
+  right: '20px',
+  backgroundColor: '#000',
+  color: '#fff',
+  padding: '6px 12px',
+  borderRadius: '8px',
+  fontSize: '12px',
+  fontWeight: '500',
+  opacity: 0.7,
+  transition: 'opacity 0.3s ease',
+  zIndex: 1000,
+}}
+  onMouseEnter={e => e.currentTarget.style.opacity = 1}
+  onMouseLeave={e => e.currentTarget.style.opacity = 0.7}
+>
+  <p style={{ margin: 0 }}>Made with ❤️ by DesignersX</p>
+</div>
+
                         </>
+                        
                     )}
                 </div>
             </div>

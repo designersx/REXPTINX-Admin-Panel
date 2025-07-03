@@ -67,12 +67,13 @@ const ViewRegisteredUsers = () => {
         navigate("/dashboard/addUsers")
     }
     //delete users
-    const handleDeleteUsers = async () => {
+    const handleDeleteUsers = async (userId) => {
         try {
-            const response = await deleteUser(userId)
+            const response = await axios.delete(`${process.env.REACT_APP_API_URL}agent/UserDelete/${userId}`)
+            console.log(response)
 
         } catch (error) {
-
+console.log(error)
         }
     }
     useEffect(() => {
@@ -125,7 +126,7 @@ const ViewRegisteredUsers = () => {
                                     <tr key={task.id}>
 
 
-                                        <td>{task.name}</td>
+                                        <td>{task.name  || "NA"}</td>
                                         <td>{task.email || "NA"}</td>
 
                                         <td>{task.phone || "NA"}</td>
@@ -134,8 +135,32 @@ const ViewRegisteredUsers = () => {
 
                                                 {canEdit && <FaEdit size={23} color="black" />}
 
-                                                {canDelete && <FaTrash size={23} color="black" />}
-                                                {canView && <GrView onClick={()=>navigate(`/view-users-agent-details/${task.userId}`)} size={23} color="black" />}
+                                               {canDelete && (
+  <FaTrash
+    size={23}
+    color="black"
+    style={{ cursor: 'pointer' }}
+    onClick={() => handleDeleteUsers(task.userId)}
+  />
+)}
+                                               {canView && (
+  <GrView
+    onClick={() => navigate(`/view-users-agent-details/${task.userId}`)}
+    size={23}
+    color="black"
+    title="See All Agents"
+  />
+)}
+
+{canView && (
+  <GrView
+    onClick={() => navigate(`/view-users-agent-details/${task.userId}`)}
+    size={23}
+    color="black"
+    title="See Knowledge Base"
+  />
+)}
+
 
                                             </div>
 

@@ -10,12 +10,13 @@ import AddUsers from './AddUsers';
 import ViewRegisteredUsers from './ViewRegisteredUsers';
 import ViewAnalytics from './ViewAnalytics';
 import ViewAgents from './ViewAgents';
+import Partners from './Partners';
 const Dashboard = () => {
   const [tab, setTab] = useState('settings');
   const location = useLocation()
   useEffect(() => {
     const pathTab = location.pathname.split('/').pop();
-    if (['settings', 'batchcall', 'viewRoles', "addRole", "viewUsers", "addUsers","registeredUsers","analytics","agents"].includes(pathTab)) {
+    if (['settings', 'batchcall', 'viewRoles', "addRole", "viewUsers", "addUsers","registeredUsers","analytics","agents","viewPartners"].includes(pathTab)) {
       setTab(pathTab);
     }
   }, [location.pathname]);
@@ -39,6 +40,8 @@ const Dashboard = () => {
           return <ViewAnalytics/>
           case "agents":
           return <ViewAgents/>
+          case "viewPartners":
+            return <Partners/>
       default:
         return <ViewAnalytics/>;
     }

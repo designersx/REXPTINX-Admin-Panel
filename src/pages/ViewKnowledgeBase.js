@@ -7,7 +7,7 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import Swal from 'sweetalert2';
 import Loader from '../components/Loader';
 
-function AgentDetails() {
+function ViewKnowledgeBase() {
   const { userId } = useParams();
   const [agents, setAgents] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
@@ -222,7 +222,7 @@ const totalPages = Math.ceil(filteredAgents.length / itemsPerPage);
   );
 }
 
-export default AgentDetails;
+export default ViewKnowledgeBase;
 
 
 

@@ -18,6 +18,8 @@ import ViewRegisteredUsers from './pages/ViewRegisteredUsers';
 import ViewAnalytics from './pages/ViewAnalytics';
 import ViewAgents from './pages/ViewAgents';
 import AgentDetails from './pages/AgentDetails';
+import Partners from './pages/Partners';
+import ViewKnowledgeBase from './pages/ViewKnowledgeBase';
 
 
 function App() {
@@ -86,10 +88,14 @@ useEffect(() => {
               <Route path="addRole" element={<AddRole />} />
               <Route path="viewUsers" element={<ViewUsers />} />
               <Route path="addUsers" element={<AddUsers />} />
+          
               <Route path="registeredUsers" element={<ViewRegisteredUsers />} />
                  <Route path="analytics" element={<ViewAnalytics />} />
                     <Route path="agents" element={<ViewAgents/>} />
+                        <Route path='viewPartners' element={<Partners/>}/>
+                        <Route path='viewKnowledgeBase/:userId' element={<ViewKnowledgeBase/>}></Route>
             </Route>
+            
             
           )}
           <Route path = '/view-users-agent-details/:userId' element={<AgentDetails/>} />

@@ -42,9 +42,12 @@ const ViewUsers = () => {
     };
 
 
-    const filteredTasks = roleData?.filter(task =>
-        task.email.toLowerCase().includes(searchQuery.trim().toLowerCase())
-    );
+   const filteredTasks = Array.isArray(roleData)
+  ? roleData.filter(task =>
+      task.email.toLowerCase().includes(searchQuery.trim().toLowerCase())
+    )
+  : [];
+
 
 
     const isAllSelected = filteredTasks?.length > 0 && selectedTasks?.length === filteredTasks?.length;

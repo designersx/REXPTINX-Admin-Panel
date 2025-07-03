@@ -11,7 +11,7 @@ import { FaUserCheck } from 'react-icons/fa'
 import { MdDashboard } from 'react-icons/md'
 import { MdAnalytics } from 'react-icons/md';
 import { MdSupportAgent } from 'react-icons/md';
-
+ import { MdGroup } from 'react-icons/md';
 const Sidebar = ({ onToggle }) => {
     const [isOpen, setIsOpen] = useState(true);
     const [showPopup, setShowPopup] = useState(false);
@@ -125,7 +125,19 @@ const Sidebar = ({ onToggle }) => {
                         {isOpen && <span>Role Management</span>}
                     </NavLink>
                 </li>
+                 <li>
+                    <NavLink
+                        to="/dashboard/viewPartners"
+                        className={({ isActive }) =>
+                            `${isActive ? styles.activeTab : ''} ${styles.navLink}`
+                        }
+                    >
+                        <MdGroup className={styles.icon} /> &nbsp;&nbsp;
+                        {isOpen && <span>Partners</span>}
+                    </NavLink>
+                </li>
                  {/* : null}  */}
+               
                 <li onClick={handleLogout} className={styles.navLink}>
                     <NavLink className={({ isActive }) =>
                         ` ${styles.navLink}`

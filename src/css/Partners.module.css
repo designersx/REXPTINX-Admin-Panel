@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
 
-.agentpage {
+.container {
   padding: 20px;
   max-width: 1200px;
   margin: auto;
@@ -14,60 +14,78 @@
   margin-bottom: 20px;
 }
 
-.inputsearch {
+.backBtn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
 
-  padding: 10px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+.inputGroup {
   margin-bottom: 20px;
 }
 
-.agentTable {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
+.customInput {
+ 
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
 }
 
-.agentTable th,
-.agentTable td {
+.partnerTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.partnerTable th,
+.partnerTable td {
   border: 1px solid #ddd;
   padding: 10px;
   text-align: center;
 }
 
-.agentTable th {
+.partnerTable th {
   background-color: #f9f9f9;
 }
 
 .noData {
   text-align: center;
-  font-size: 1.2rem;
-  color: #888;
   padding: 20px;
+  font-weight: bold;
+  color: #888;
 }
 
-.pagination {
-  margin-top: 20px;
+.error {
+  color: red;
   text-align: center;
 }
 
-.pagination button {
-  margin: 0 4px;
+.pagination {
+  display: flex;
+
+  margin-top: 20px;
+  gap: 8px;
+}
+
+.pageButton {
   padding: 6px 12px;
   background-color: #e0e0e0;
-  color: #000;
   border: none;
   border-radius: 4px;
   cursor: pointer;
 }
 
-.pagination button.active {
-  background-color: #007bff;
-  color: #fff;
+.activePage {
+  background-color: black;
+  color: white;
+  font-weight: bold;
 }
+
 .pagination {
     display: flex;
+  
     align-items: center;
     margin-top: 1.5rem;
     gap: 10px;
