@@ -200,11 +200,21 @@ const totalPages = Math.ceil(filteredAgents.length / itemsPerPage);
 
       {/* Business Website */}
       <td title={agent.businessDetails?.BusinesswebUrl || 'N/A'}>
-  {agent.businessDetails?.BusinesswebUrl
-    ? agent.businessDetails.BusinesswebUrl.length > 25
+ {agent.businessDetails?.BusinesswebUrl ? (
+  <a
+    href={agent.businessDetails.BusinesswebUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    style={{ color: '#007bff', textDecoration: 'underline' }}
+  >
+    {agent.businessDetails.BusinesswebUrl.length > 25
       ? agent.businessDetails.BusinesswebUrl.substring(0, 25) + '...'
-      : agent.businessDetails.BusinesswebUrl
-    : 'N/A'}
+      : agent.businessDetails.BusinesswebUrl}
+  </a>
+) : (
+  'N/A'
+)}
+
 </td>
 <td>
    {agent.businessDetails?.knowledgeBaseStatus === null || agent.businessDetails?.knowledgeBaseStatus === undefined
