@@ -70,6 +70,22 @@ const [editFormData, setEditFormData] = useState({ name: '', email: '', phone: '
     const handleAddRole = () => {
         navigate("/dashboard/addUsers")
     }
+    const confirmAndDelete = async (userId) => {
+  const result = await Swal.fire({
+    title: 'Are you sure?',
+    text: "Do you want to delete this user?",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Yes, delete it!',
+  });
+
+  if (result.isConfirmed) {
+    handleDeleteUsers(userId);
+  }
+};
+
     //delete users
     const handleDeleteUsers = async (userId) => {
         try {
@@ -132,8 +148,8 @@ fetchUsers()
                                     <tr key={task.id}>
 
 
-                                        <td>{task.name || "NA"}</td>
-                                        <td>{task.email || "NA"}</td>
+                                        <td>{task.name || "N/A"}</td>
+                                        <td>{task.email || "N/A"}</td>
 
                                         <td>{task.phone || "N/A"}</td>
                                          <td>
@@ -163,14 +179,14 @@ fetchUsers()
 )}
 
 
-                                                {canDelete && (
-                                                    <FaTrash
-                                                        size={23}
-                                                        color="black"
-                                                        style={{ cursor: 'pointer' }}
-                                                        onClick={() => handleDeleteUsers(task.userId)}
-                                                    />
-                                                )}
+                                               {canDelete && (
+  <FaTrash
+    size={23}
+    color="black"
+    style={{ cursor: 'pointer' }}
+    onClick={() => confirmAndDelete(task.userId)}
+  />
+)}
                                                 {canView && (
                                                     <GrView
                                                         onClick={() => navigate(`/view-users-agent-details/${task.userId}`)}

@@ -158,7 +158,7 @@ const totalPages = Math.ceil(filteredAgents.length / itemsPerPage);
     <th>Size</th>
     <th>Service</th>
     <th>Website</th>
-    <th>Knowledge Base Status</th>
+    <th>Status</th>
     <th>Actions</th>
   </tr>
 </thead>
@@ -208,7 +208,7 @@ const totalPages = Math.ceil(filteredAgents.length / itemsPerPage);
 </td>
 <td>
    {agent.businessDetails?.knowledgeBaseStatus === null || agent.businessDetails?.knowledgeBaseStatus === undefined
-  ? "Not Added"
+  ? "N/A"
   : agent.businessDetails.knowledgeBaseStatus === true
   ? "Active"
   : "Inactive"}
