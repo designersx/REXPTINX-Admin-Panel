@@ -94,11 +94,12 @@ useEffect(() => {
                  <Route path="analytics" element={<ViewAnalytics />} />
                     <Route path="agents" element={<ViewAgents/>} />
                         <Route path='viewPartners' element={<Partners/>}/>
-                        <Route path='viewKnowledgeBase/:userId' element={<ViewKnowledgeBase/>}></Route>
+                        
             </Route>
             
             
           )}
+          <Route path='/viewKnowledgeBase/:userId' element={<ViewKnowledgeBase/>}></Route>
           <Route path = '/view-users-agent-details/:userId' element={<AgentDetails/>} />
           <Route path = '/view-prompt-agent-details/:llmId' element={<PromptsDetails/>} />
         </Routes>
