@@ -220,9 +220,9 @@ const totalPages = Math.ceil(filteredAgents.length / itemsPerPage);
 
 </td>
 <td>
-   {agent.businessDetails?.knowledgeBaseStatus === null || agent.businessDetails?.knowledgeBaseStatus === undefined
+   {agent?.knowledgeBaseStatus === null || agent?.knowledgeBaseStatus === undefined
   ? "N/A"
-  : agent.businessDetails.knowledgeBaseStatus === true
+  : agent?.knowledgeBaseStatus === true
   ? "Active"
   : "Inactive"}
 
